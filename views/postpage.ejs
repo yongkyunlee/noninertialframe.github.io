@@ -1,0 +1,79 @@
+<% include ./partials/header.ejs %>
+<link rel="stylesheet" href="/stylesheets/post.css">
+
+<div class="head">
+    <div id="pageTitle">NonInertial Frame</div>
+    <ul class="routeList">
+        <li id="aboutMe" class="route"><a href="/aboutme">About Me</a></li>
+        <li id="home" class="route"><a href="/">Home</a></li>
+        <li id="aboutSite" class="route"><a href="/aboutsite">About Site</a></li>
+    </ul>
+    <hr id="headerLine">
+</div>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-xs-2"></div>
+        <div class="col-xs-8">
+            <div class="post">
+                <p class="postTitle"><%= post.title %></p>
+                <p class="postContent"><%- post.content %></p>
+            </div>
+            <div class="newComment">
+                <span>New</span>
+                <!--<form action="/posts/<%=post._id%>/comments/create" method="POST" data-ajax="true">-->
+                <form>
+                    <div class="form-group">
+                        <textarea class="form-control" rows="3" placeholder="Enter your comment" id="contentInput"></textarea> <!--name="newComment"> -->
+                    </div>
+                    <div class="form-group row">
+                        <label for="nicknameInput" class="col-1 col-form-label">Nickname</label>
+                        <div class="col-3">
+                            <input class="form-control" type="text" id="nicknameInput"> <!-- name="newNickname"> -->
+                        </div>
+                        <label for="passwordInput" class="col-1 col-form-label">Password</label>
+                        <div class="col-3">
+                            <input class="form-control" type="password" id="passwordInput"> <!-- name="newPassword"> -->
+                        </div>
+                    </div>
+                    <button type="submit" id="commentSubmitBtn">Submit</button>
+                    <!--<input type="button" class="btn btn-secondary" id="commentSubmitBtn" value="Submit">-->
+                </form>                    
+            </div>
+            <div id="commentList">
+                <% post.comments.forEach(function(comment){ %>
+                    <div class="commentDiv" id="div_<%= comment._id %>">
+                        <p class="commentInfo">
+                            <span class="commentNicknamer"><%= comment.nickName %></span>
+                            <span class="commentTime"><%= comment.createdAt %></span>
+                            <span class="editRoute" id="edit_<%= comment._id %>" onclick="editComment('<%= comment._id %>')">Edit</span>
+                            <span class="deleteRoute" id="delete_<%= comment._id %>" onclick="deleteComment('<%= comment._id %>')">Delete</span>
+                        </p>
+                        <p class="commentContent" id="display_<%= comment._id %>"><%= comment.content %></p>
+                        <textarea class="commentEditInput" id="change_<%= comment._id %>" style="display:none;" placeholder="<%= comment.content %>"></textarea>
+                        <div class="commentAuth">
+                            <div class="form-group row" id="authPasswordGroup_<%= comment._id %>" style="display:none;">
+                            <label for="authPassword_<%= comment._id %>">Password</label>
+                            <input class="form-control" type="password" id="passwordInput_<%= comment._id %>">
+                            </div>
+                            <div class="deleteAuth" id="deleteAuth_<%= comment._id %>" style="display:none;">
+                                <span class="passwordQ">Are you sure?</span>
+                                <button type="submit" onclick="deleteAuth('<%= comment._id %>')">Confirm</button>
+                            </div>
+                            <div class="editAuth" id="editAuth_<%= comment._id %>" style="display:none;">
+                                <button type="submit" onclick="editAuth('<%= comment._id %>')">Confirm</button>
+                            </div>
+                            <button id="cancelChange_<%= comment._id %>" onclick="cancelAction('<%= comment._id %>')" style="display:none;">Cancel</button>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+        <div class="col-xs-2"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var postId = "<%= post._id %>";
+</script>
+<script type="text/javascript" src="/scripts/postpage.js"></script>
+<% include ./partials/footer.ejs %>

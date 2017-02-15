@@ -1,0 +1,29 @@
+<% include ./partials/header.ejs %>
+<link rel="stylesheet" href="/stylesheets/home.css">
+
+<div class="head">
+    <div id="pageTitle">NonInertial Frame</div>
+    <ul class="routeList">
+        <li id="aboutMe" class="route"><a href="/aboutme">About Me</a></li>
+        <li id="home" class="route selected"><a href="/">Home</a></li>
+        <li id="aboutSite" class="route"><a href="/aboutsite">About Site</a></li>
+    </ul>
+    <hr id="headerLine">
+</div>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-xs-2"></div>
+        <div class="col-xs-8">
+        <% for (var i = 0; i < posts.length; i++) { %>
+            <div class="post">
+                <p class="postTitle"><a href=/posts/<%=posts[i]._id%>><%= posts[i].title %></a></p>
+                <p class="postContent"><%- posts[i].content %></p>
+            </div>
+        <% } %>
+        </div>
+        <div class="col-xs-2"></div>
+    </div>
+</div>
+
+<script type="text/javascript" src="scripts/home.js"></script>
+<% include ./partials/footer.ejs %>
