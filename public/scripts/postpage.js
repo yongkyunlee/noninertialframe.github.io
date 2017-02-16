@@ -59,8 +59,8 @@ function cancelAction(commentId) {
 
 function deleteAuth(commentId) {
     $.ajax({
-        url: "/posts/" + postId + "/comments/delete",
-        type: 'POST',
+        url: "/posts/" + postId + "/comments/" + commentId,
+        type: 'DELETE',
         dataType: 'json',
         data: {'_id': commentId, 'password': $('#passwordInput_' + commentId).val()},
         success: function(result) {

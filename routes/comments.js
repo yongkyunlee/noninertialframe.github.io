@@ -42,7 +42,7 @@ router.post('/create', function(req, res, next){
 });
 
 // comment delete
-router.post('/delete', middleware.commentAuth, function(req, res){
+router.delete('/:comment_id', middleware.commentAuth, function(req, res){
     console.log('delete request at server')
     Post.findById(req.params.id, function(err, post){
         if (err) {
