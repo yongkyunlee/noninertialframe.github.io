@@ -1,4 +1,18 @@
 <% include ./partials/header.ejs %>
+<% var formatTime = function(jsDate) {
+    var dd = jsDate.getDate();
+    var mm = jsDate.getMonth() + 1; // january is 0
+    var yyyy = jsDate.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    var formatDate = yyyy + '.' + dd + '.' + mm;
+    return formatDate;
+} %>
+
 <link rel="stylesheet" href="/stylesheets/post.css">
 
 <div class="head">
@@ -44,7 +58,7 @@
                     <div class="commentDiv" id="div_<%= comment._id %>">
                         <p class="commentInfo">
                             <span class="commentNicknamer"><%= comment.nickName %></span>
-                            <span class="commentTime"><%= comment.createdAt %></span>
+                            <span class="commentTime"><%= formatTime(comment.createdAt) %></span>
                             <span class="editRoute" id="edit_<%= comment._id %>" onclick="editComment('<%= comment._id %>')">Edit</span>
                             <span class="deleteRoute" id="delete_<%= comment._id %>" onclick="deleteComment('<%= comment._id %>')">Delete</span>
                         </p>

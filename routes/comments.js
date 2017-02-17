@@ -3,6 +3,7 @@ var express = require('express'),
     Comment = require('../models/comment'),
     Post = require('../models/post'),
     middleware = require('../middleware/auth'),
+    util = require('../jsUtils.js'),
     router = express.Router({mergeParams: true});
 
 /* TODOs
@@ -34,7 +35,7 @@ router.post('/create', function(req, res, next){
             post.save();
             res.send({nickname: req.body.nickname,
                       content: req.body.content,
-                      time: newComment.createdAt,
+                      time: util.formatTime(newComment.createdAt),
                       _id: newComment._id.toString()
             });
         }
