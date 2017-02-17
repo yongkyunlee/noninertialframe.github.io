@@ -1,18 +1,38 @@
 <% include ./partials/header.ejs %>
-<% var formatTime = function(jsDate) {
+<% var formatTime = function(jsDate, option) {
     var dd = jsDate.getDate();
     var mm = jsDate.getMonth() + 1; // january is 0
     var yyyy = jsDate.getFullYear();
     if (dd < 10) {
         dd = '0' + dd;
     }
-    if (mm < 10) {
-        mm = '0' + mm;
+    if (option == "short") {
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        var formatDate = yyyy + '.' + mm + '.' + dd;
     }
-    var formatDate = yyyy + '.' + dd + '.' + mm;
+    else if (option == "long") {
+        switch (mm) {
+            case 1: mm = "January"; break;
+            case 2: mm = "February"; break;
+            case 3: mm = "March"; break;
+            case 4: mm = "April"; break;
+            case 5: mm = "May"; break;
+            case 6: mm = "June"; break;
+            case 7: mm = "July"; break;
+            case 8: mm = "August"; break;
+            case 9: mm = "September"; break;
+            case 10: mm = "October"; break;
+            case 11: mm = "November"; break;
+            case 12: mm = "December"; break;
+        }
+        var formatDate = mm + " " + dd + ", " + yyyy
+    }
     return formatDate;
 } %>
 
+<link rel="stylesheet" href="/stylesheets/postpage.css">
 <link rel="stylesheet" href="/stylesheets/post.css">
 
 <div class="head">
@@ -30,11 +50,11 @@
         <div class="col-xs-8">
             <div class="post">
                 <p class="postTitle"><%= post.title %></p>
+                <p class="postDate"><%= formatTime(post.createdAt, "long") %></p>
                 <p class="postContent"><%- post.content %></p>
             </div>
             <div class="newComment">
                 <span>New</span>
-                <!--<form action="/posts/<%=post._id%>/comments/create" method="POST" data-ajax="true">-->
                 <form>
                     <div class="form-group">
                         <textarea class="form-control" rows="3" placeholder="Enter your comment" id="contentInput"></textarea> <!--name="newComment"> -->
@@ -58,7 +78,7 @@
                     <div class="commentDiv" id="div_<%= comment._id %>">
                         <p class="commentInfo">
                             <span class="commentNicknamer"><%= comment.nickName %></span>
-                            <span class="commentTime"><%= formatTime(comment.createdAt) %></span>
+                            <span class="commentTime"><%= formatTime(comment.createdAt, "short") %></span>
                             <span class="editRoute" id="edit_<%= comment._id %>" onclick="editComment('<%= comment._id %>')">Edit</span>
                             <span class="deleteRoute" id="delete_<%= comment._id %>" onclick="deleteComment('<%= comment._id %>')">Delete</span>
                         </p>
