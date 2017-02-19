@@ -1,29 +1,66 @@
 <% include ./partials/header.ejs %>
+<link rel="stylesheet" href="/stylesheets/post.css">
 <link rel="stylesheet" href="/stylesheets/home.css">
 
-<div class="head">
-    <div id="pageTitle">NonInertial Frame</div>
-    <ul class="routeList">
-        <li id="aboutMe" class="route"><a href="/aboutme">About Me</a></li>
-        <li id="home" class="route selected"><a href="/">Home</a></li>
-        <li id="aboutSite" class="route"><a href="/aboutsite">About Site</a></li>
-    </ul>
-    <hr id="headerLine">
-</div>
-<div class="container-fluid main">
+<% var formatTime = function(jsDate, option) {
+    var dd = jsDate.getDate();
+    var mm = jsDate.getMonth() + 1; // january is 0
+    var yyyy = jsDate.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (option == "short") {
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        var formatDate = yyyy + '.' + mm + '.' + dd;
+    }
+    else if (option == "long") {
+        switch (mm) {
+            case 1: mm = "January"; break;
+            case 2: mm = "February"; break;
+            case 3: mm = "March"; break;
+            case 4: mm = "April"; break;
+            case 5: mm = "May"; break;
+            case 6: mm = "June"; break;
+            case 7: mm = "July"; break;
+            case 8: mm = "August"; break;
+            case 9: mm = "September"; break;
+            case 10: mm = "October"; break;
+            case 11: mm = "November"; break;
+            case 12: mm = "December"; break;
+        }
+        var formatDate = mm + " " + dd + ", " + yyyy
+    }
+    return formatDate;
+} %>
+
+<% include ./partials/siteHead.ejs %>
+
+<div class="container-fluid" id="main">
     <div class="row">
         <div class="col-xs-2"></div>
         <div class="col-xs-8">
-        <% for (var i = 0; i < posts.length; i++) { %>
-            <div class="post">
-                <p class="postTitle"><a href=/posts/<%=posts[i]._id%>><%= posts[i].title %></a></p>
-                <p class="postContent"><%- posts[i].content %></p>
-            </div>
-        <% } %>
+            <% for (var i = posts.length - 1; i >= 0; i--) { %>
+                <div class="post">
+                    <p class="postTitle"><a href=/posts/<%= posts[i]._id %>><%= posts[i].title %></a></p>
+                    <p class="postDate"><%= formatTime(posts[i].createdAt, "long") %></p>
+                    <div class="postContent"><%- posts[i].content %></div>
+                </div>
+                <div class="postFooter">
+                    <a href="/posts/<%= posts[i]._id %>" class="commentIconBlock">
+                    <i class="fa fa-commenting-o fa-lg" aria-hidden="true"></i>
+                    <span><%= posts[i].comments.length %></span>
+                    </a>
+                </div>
+            <% } %>
         </div>
         <div class="col-xs-2"></div>
     </div>
 </div>
 
-<script type="text/javascript" src="scripts/home.js"></script>
+<script>
+    document.getElementById("home").style.color = "black";
+</script>
+
 <% include ./partials/footer.ejs %>

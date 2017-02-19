@@ -1,9 +1,9 @@
-.head {
+#head {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    position: fixed;
+    position: static;
     top: 0;
     width: 100%;
     display: inline-block;
@@ -13,10 +13,6 @@
     z-index: 1;
 }
 
-.main {
-    margin-top: 10em;
-}
-
 #pageTitle {
     font-size: 3.7em;
     font-family: 'Raleway', sans-serif;
@@ -24,7 +20,7 @@
     text-align: center;
     display: block;
     padding-top: 0.3em;
-    padding-bottom: 0.3em;
+    padding-bottom: 0.2em;
 }
 
 .routeList {
@@ -46,17 +42,17 @@
     color: #C0C0C0;
 }
 
-.routeList li:hover {
-    color: #696969;
-    cursor: pointer;
+a {
+    color: inherit;
 }
 
 a, a:hover, a:active, a:visited {
     text-decoration: none;
 }
 
-a {
-    color: inherit;
+a:hover {
+    color: #708090;
+    cursor: pointer;
 }
 
 #headerLine{
@@ -64,8 +60,4 @@ a {
     margin-top: 0.6em;
     margin-bottom: 0;
     width: 40%;
-}
-
-.editRoute, .deleteRoute {
-    color: #C0C0C0;   
 }

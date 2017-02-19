@@ -1,16 +1,19 @@
 <% include ./partials/header.ejs %>
-<div class="head">
-    <div id="pageTitle">NonInertial Frame</div>
-    <ul class="routeList">
-        <li id="aboutMe" class="route selected"><a href="/aboutme">About Me</a></li>
-        <li id="home" class="route"><a href="/">Home</a></li>
-        <li id="aboutSite" class="route"><a href="/aboutsite">About Site</a></li>
-    </ul>
-    <hr id="headerLine">
+<% include ./partials/siteHead.ejs %>
+
+<div class="container-fluid" id="main">
+    <div class="row">
+        <div class="col-xs-2"></div>
+        <div class="col-xs-8">
+            <p> This is about me </p>
+        </div>
+        <div class="col-xs-2"></div>
+    </div>
 </div>
-<div class="main">
-<p>This is about me
-</p>
-</div>
-<script type="text/javascript" src="scripts/home.js"></script>
+
+<script>
+    document.getElementById("aboutMe").style.color = "black";
+</script>
+
+
 <% include ./partials/footer.ejs %>

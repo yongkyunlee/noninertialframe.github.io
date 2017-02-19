@@ -3,23 +3,22 @@ var mongoose = require('mongoose'),
     Comment = require('./models/comment'),
     Post = require('./models/post');
     
-var admin = {
-    id: process.env.ADMIN_ID,
-    password: process.env.ADMIN_PW
-};
-
 function seedDB(){
     Admin.remove({}, function(err){
         if (err) {
             throw err;
         }
         console.log("admin cleared");
-        Admin.create(admin, function(err, result){
-            if (err) {
-                throw err;
-            }
-            console.log("Default admin created");
-        });
+    });
+    var newAdmin = new Admin({
+        id: process.env.ADMIN_ID,
+        password: process.env.ADMIN_PW
+    });
+    newAdmin.save(function(err){
+        if (err) {
+            throw err;
+        }
+        console.log("Default admin - id: " + newAdmin.id + " pw: " + newAdmin.password);
     });
     Comment.remove({}, function(err){
         if (err) {

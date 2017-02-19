@@ -9,7 +9,7 @@ module.exports = {
         if (mm < 10) {
             mm = '0' + mm;
         }
-        var formatDate = yyyy + '.' + dd + '.' + mm;
+        var formatDate = yyyy + '.' + mm + '.' + dd;
         return formatDate;
     }
 };

@@ -31,12 +31,13 @@ router.post('/create', function(req, res, next){
                     throw err;
                 }
             });
-            post.comments.push(newComment);
+            post.comments.unshift(newComment);
             post.save();
             res.send({nickname: req.body.nickname,
                       content: req.body.content,
                       time: util.formatTime(newComment.createdAt),
-                      _id: newComment._id.toString()
+                      _id: newComment._id.toString(),
+                      commentNum: post.comments.length
             });
         }
     });
@@ -70,7 +71,7 @@ router.delete('/:comment_id', middleware.commentAuth, function(req, res){
             }
             post.save();
             console.log('comment deleted');
-            res.send({success: true});
+            res.send({success: true, commentNum: post.comments.length});
         }
     });
 });

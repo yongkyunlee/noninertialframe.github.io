@@ -1,12 +1,9 @@
-#commentList {
-    padding-bottom: 3em;
-}
-
 #commentDivTitle {
     font-family: 'Raleway', sans-serif;
     font-weight: 800;
     font-size: 1.6em;
     padding-bottom: 1em;
+    padding-top: 0.5em;
 }
 
 #commentNum {
@@ -21,6 +18,10 @@
 #submitArea {
     display: table;
     width: 100%;
+    padding-bottom: 3em;
+}
+
+#commentList {
     padding-bottom: 3em;
 }
 
@@ -83,6 +84,7 @@
     /*float: left;*/
     display: table-cell;
 }
+
 .commentNickname {
     font-family: 'Raleway', sans-serif;
     font-weight: 800;
@@ -99,40 +101,21 @@
     display: inline-block;
 }
 
-.commentEditRoute {
+.commentEditRoute, .commentDeleteRoute {
     display: table-cell;
     text-align: right;
     width: 5em;
 }
 
-.commentDeleteRoute {
-    display: table-cell;
-    text-align: right;
-    width: 5em;
-}
-
-.editRoute {
+.editRoute, .deleteRoute {
     font-size: 1.2em;
     display: inline-block;
+    color: #C0C0C0;
 }
 
-.editRoute:hover {
+.editRoute:hover, .deleteRoute:hover {
     cursor: pointer;
     color: black;
-}
-
-.deleteRoute {
-    font-size: 1.2em;
-    display: inline-block;
-}
-
-.deleteRoute:hover {
-    cursor: pointer;
-    color: black;
-}
-
-.routes {
-    padding-top: 0.3em;
 }
 
 .commentContent {

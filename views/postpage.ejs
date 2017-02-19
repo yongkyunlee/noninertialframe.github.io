@@ -1,4 +1,8 @@
 <% include ./partials/header.ejs %>
+<link rel="stylesheet" href="/stylesheets/post.css">
+<link rel="stylesheet" href="/stylesheets/comment.css">
+<link rel="stylesheet" href="/stylesheets/head.css">
+
 <% var formatTime = function(jsDate, option) {
     var dd = jsDate.getDate();
     var mm = jsDate.getMonth() + 1; // january is 0
@@ -32,71 +36,68 @@
     return formatDate;
 } %>
 
-<link rel="stylesheet" href="/stylesheets/postpage.css">
-<link rel="stylesheet" href="/stylesheets/post.css">
+<% include ./partials/siteHead.ejs %>
 
-<div class="head">
-    <div id="pageTitle">NonInertial Frame</div>
-    <ul class="routeList">
-        <li id="aboutMe" class="route"><a href="/aboutme">About Me</a></li>
-        <li id="home" class="route"><a href="/">Home</a></li>
-        <li id="aboutSite" class="route"><a href="/aboutsite">About Site</a></li>
-    </ul>
-    <hr id="headerLine">
-</div>
-<div class="container-fluid main">
+<div class="container-fluid" id="main">
     <div class="row">
         <div class="col-xs-2"></div>
         <div class="col-xs-8">
             <div class="post">
                 <p class="postTitle"><%= post.title %></p>
                 <p class="postDate"><%= formatTime(post.createdAt, "long") %></p>
-                <p class="postContent"><%- post.content %></p>
+                <div class="postContent"><%- post.content %></div>
             </div>
+            <div id="commentDivTitle">Comments<span id="commentNum"> (<%= post.comments.length %>)</span></div>
             <div class="newComment">
-                <span>New</span>
                 <form>
-                    <div class="form-group">
-                        <textarea class="form-control" rows="3" placeholder="Enter your comment" id="contentInput"></textarea> <!--name="newComment"> -->
+                <div class="form-group">
+                    <textarea class="form-control" rows="4" placeholder="Enter comment" id="contentInput"></textarea> <!--name="newComment"> -->
+                </div>
+                <div id="submitArea">
+                    <div id="nicknameInputDiv">
+                        <label for="nicknameInput">Nickname</label>
+                        <span class="commentFormInput"><input class="form-control inputBox" type="text" id="nicknameInput"></span>
                     </div>
-                    <div class="form-group row">
-                        <label for="nicknameInput" class="col-1 col-form-label">Nickname</label>
-                        <div class="col-3">
-                            <input class="form-control" type="text" id="nicknameInput"> <!-- name="newNickname"> -->
-                        </div>
-                        <label for="passwordInput" class="col-1 col-form-label">Password</label>
-                        <div class="col-3">
-                            <input class="form-control" type="password" id="passwordInput"> <!-- name="newPassword"> -->
-                        </div>
+                    <div id="passwordInputDiv">
+                        <label for="passwordInput">Password</label>
+                        <span class="commentFormInput"><input class="form-control inputBox" type="password" id="passwordInput"></span>
                     </div>
-                    <button type="submit" id="commentSubmitBtn">Submit</button>
-                    <!--<input type="button" class="btn btn-secondary" id="commentSubmitBtn" value="Submit">-->
-                </form>                    
+                    <div id="commentSubmit">
+                    <input type="submit" id="commentSubmitBtn" value="Post">
+                    </div>
+                </div>
+                </form>
             </div>
             <div id="commentList">
                 <% post.comments.forEach(function(comment){ %>
                     <div class="commentDiv" id="div_<%= comment._id %>">
-                        <p class="commentInfo">
-                            <span class="commentNicknamer"><%= comment.nickName %></span>
-                            <span class="commentTime"><%= formatTime(comment.createdAt, "short") %></span>
-                            <span class="editRoute" id="edit_<%= comment._id %>" onclick="editComment('<%= comment._id %>')">Edit</span>
-                            <span class="deleteRoute" id="delete_<%= comment._id %>" onclick="deleteComment('<%= comment._id %>')">Delete</span>
-                        </p>
-                        <p class="commentContent" id="display_<%= comment._id %>"><%= comment.content %></p>
-                        <textarea class="commentEditInput" id="change_<%= comment._id %>" style="display:none;" placeholder="<%= comment.content %>"></textarea>
-                        <div class="commentAuth">
-                            <div class="form-group row" id="authPasswordGroup_<%= comment._id %>" style="display:none;">
-                            <label for="authPassword_<%= comment._id %>">Password</label>
-                            <input class="form-control" type="password" id="passwordInput_<%= comment._id %>">
+                        <div class="container-fluid commentDisplay">
+                            <div class="commentInfo">
+                                <span class="commentNickname"><%= comment.nickName %></span>
+                                <span class="commentTime"><%= formatTime(comment.createdAt, "short") %></span>
                             </div>
+                            <div class="commentEditRoute"><span class="editRoute" id="edit_<%= comment._id %>" onclick="editComment('<%= comment._id %>')">Edit</span></div>
+                            <div class="commentDeleteRoute"><span class="deleteRoute" id="delete_<%= comment._id %>" onclick="deleteComment('<%= comment._id %>')">Delete</span></div>
+                        </div>
+                        <div class="commentContent" id="display_<%= comment._id %>"><%= comment.content %></div>
+                        <textarea class="form-control commentEditInput" id="change_<%= comment._id %>" style="display:none;"><%= comment.content %></textarea>
+                        <div class="commentAuth">
+                            <div class="passwordAuth" id="authPasswordGroup_<%= comment._id %>" style="display:none;">
+                                <label for="authPassword_<%= comment._id %>">Password</label>
+                                <span class="commentPasswordInput"><input class="form-control authPasswordForm" type="password" id="passwordInput_<%= comment._id %>"></span>
+                            </div>
+                            <div class="authGroup">
+                            <div class="passwordQ" id="pwQ_<%= comment._id %>" style="display:none;">You Sure?</span></div>
                             <div class="deleteAuth" id="deleteAuth_<%= comment._id %>" style="display:none;">
-                                <span class="passwordQ">Are you sure?</span>
-                                <button type="submit" onclick="deleteAuth('<%= comment._id %>')">Confirm</button>
+                                <button class="deleteBtn" type="submit" onclick="deleteAuth('<%= comment._id %>')">CONFIRM</button>
                             </div>
                             <div class="editAuth" id="editAuth_<%= comment._id %>" style="display:none;">
-                                <button type="submit" onclick="editAuth('<%= comment._id %>')">Confirm</button>
+                                <button class="editBtn" type="submit" onclick="editAuth('<%= comment._id %>')">POST</button>
                             </div>
-                            <button id="cancelChange_<%= comment._id %>" onclick="cancelAction('<%= comment._id %>')" style="display:none;">Cancel</button>
+                            <div class="cancelAuth">
+                                <button class="cancelBtn" id="cancelChange_<%= comment._id %>" onclick="cancelAction('<%= comment._id %>')" style="display:none;">CANCEL</button>
+                            </div>
+                            </div>
                         </div>
                     </div>
                 <% }) %>

@@ -5,7 +5,8 @@ var postSchema = new mongoose.Schema({
     content: {type: String, required: true},
     fileName: {type: String, required: true},
     likes: {type: Number, 'default': 0},
-    createdAt: {type: Date, index: {unique: false, expires: '1d'}},
+    createdAt: {type: Date, 'default': Date.now, 
+                index: {unique: false, expires: '1d'}},
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment"
