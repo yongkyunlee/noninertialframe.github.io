@@ -1,15 +1,9 @@
 <% include ./partials/header.ejs %>
 <% include ./partials/siteHead.ejs %>
 
-<div class="container-fluid" id="main">
-    <div class="row">
-        <div class="col-xs-2"></div>
-        <div class="col-xs-8">
-            <p> This is about me </p>
-        </div>
-        <div class="col-xs-2"></div>
-    </div>
-</div>
+<% include ./partials/colheader.ejs %>
+<p> This is about me </p>
+<% include ./partials/colfooter.ejs %>
 
 <script>
     document.getElementById("aboutSite").style.color = "black";

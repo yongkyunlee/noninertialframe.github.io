@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    position: static;
+    position: fixed;
     top: 0;
     width: 100%;
     display: inline-block;
@@ -55,9 +55,27 @@ a:hover {
     cursor: pointer;
 }
 
-#headerLine{
-    color: #C0C0C0;
+#headerLine {
+    color: #708090;
+    /*border: none;*/
     margin-top: 0.6em;
     margin-bottom: 0;
-    width: 40%;
+    width: 25em;
+    /*height: 0.5px;*/
+    /*background-color: #C0C0C0;*/
+}
+
+
+@media screen and (max-width: 470px) { /* When title becomes two lines */
+    #pageTitle {
+        font-size: 2.3em;
+    }
+    .routeList li{
+        font-size: 1em;
+        padding-left: 0.9em;
+        padding-right: 0.9em;
+    }
+    #headerLine {
+        width: 22em;
+    }
 }

@@ -1,6 +1,5 @@
 <% include ./partials/header.ejs %>
 <link rel="stylesheet" href="/stylesheets/post.css">
-<link rel="stylesheet" href="/stylesheets/home.css">
 
 <% var formatTime = function(jsDate, option) {
     var dd = jsDate.getDate();
@@ -36,28 +35,21 @@
 } %>
 
 <% include ./partials/siteHead.ejs %>
-
-<div class="container-fluid" id="main">
-    <div class="row">
-        <div class="col-xs-2"></div>
-        <div class="col-xs-8">
-            <% for (var i = posts.length - 1; i >= 0; i--) { %>
-                <div class="post">
-                    <p class="postTitle"><a href=/posts/<%= posts[i]._id %>><%= posts[i].title %></a></p>
-                    <p class="postDate"><%= formatTime(posts[i].createdAt, "long") %></p>
-                    <div class="postContent"><%- posts[i].content %></div>
-                </div>
-                <div class="postFooter">
-                    <a href="/posts/<%= posts[i]._id %>" class="commentIconBlock">
-                    <i class="fa fa-commenting-o fa-lg" aria-hidden="true"></i>
-                    <span><%= posts[i].comments.length %></span>
-                    </a>
-                </div>
-            <% } %>
-        </div>
-        <div class="col-xs-2"></div>
+<% include ./partials/colheader.ejs %>
+<% for (var i = posts.length - 1; i >= 0; i--) { %>
+    <div class="post">
+        <p class="postTitle"><a href=/posts/<%= posts[i]._id %>><%= posts[i].title %></a></p>
+        <p class="postDate"><%= formatTime(posts[i].createdAt, "long") %></p>
+        <div class="postContent"><%- posts[i].content %></div>
     </div>
-</div>
+    <div class="postFooter">
+        <a href="/posts/<%= posts[i]._id %>" class="commentIconBlock">
+        <i class="fa fa-commenting-o fa-lg" aria-hidden="true"></i>
+        <span><%= posts[i].comments.length %></span>
+        </a>
+    </div>
+<% } %>
+<% include ./partials/colfooter.ejs %>
 
 <script>
     document.getElementById("home").style.color = "black";

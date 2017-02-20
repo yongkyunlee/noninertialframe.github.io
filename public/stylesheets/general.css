@@ -8,6 +8,30 @@
 
 
 #main {
-    margin-top: 0;
-    padding: 0;
+    margin-top: 9.6em;
+    margin-bottom: 1em;
+}
+
+
+@media screen and (max-width: 640px) {
+    #main {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    .gutter {
+        display: none;
+    }
+    .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .mainCol {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 470px) { /* When title becomes two lines */
+    #main {
+        margin-top: 6.5em;
+    }
 }

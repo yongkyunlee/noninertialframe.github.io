@@ -37,75 +37,68 @@
 } %>
 
 <% include ./partials/siteHead.ejs %>
-
-<div class="container-fluid" id="main">
-    <div class="row">
-        <div class="col-xs-2"></div>
-        <div class="col-xs-8">
-            <div class="post">
-                <p class="postTitle"><%= post.title %></p>
-                <p class="postDate"><%= formatTime(post.createdAt, "long") %></p>
-                <div class="postContent"><%- post.content %></div>
-            </div>
-            <div id="commentDivTitle">Comments<span id="commentNum"> (<%= post.comments.length %>)</span></div>
-            <div class="newComment">
-                <form>
-                <div class="form-group">
-                    <textarea class="form-control" rows="4" placeholder="Enter comment" id="contentInput"></textarea> <!--name="newComment"> -->
+<% include ./partials/colheader.ejs %>
+<div class="post">
+    <p class="postTitle"><%= post.title %></p>
+    <p class="postDate"><%= formatTime(post.createdAt, "long") %></p>
+    <div class="postContent"><%- post.content %></div>
+</div>
+<div id="commentDivTitle">Comments<span id="commentNum"> (<%= post.comments.length %>)</span></div>
+<div class="newComment">
+    <form>
+    <div class="form-group">
+        <textarea class="form-control" rows="4" placeholder="Enter comment" id="contentInput"></textarea> <!--name="newComment"> -->
+    </div>
+    <div id="submitArea">
+        <div id="nicknameInputDiv">
+            <label for="nicknameInput">Nickname</label>
+            <span class="commentFormInput"><input class="form-control inputBox" type="text" id="nicknameInput"></span>
+        </div>
+        <div id="passwordInputDiv">
+            <label for="passwordInput">Password</label>
+            <span class="commentFormInput"><input class="form-control inputBox" type="password" id="passwordInput"></span>
+        </div>
+        <div id="commentSubmit">
+        <input type="submit" id="commentSubmitBtn" value="Post">
+        </div>
+    </div>
+    </form>
+</div>
+<div id="commentList">
+    <% post.comments.forEach(function(comment){ %>
+        <div class="commentDiv" id="div_<%= comment._id %>">
+            <div class="container-fluid commentDisplay">
+                <div class="commentInfo">
+                    <span class="commentNickname"><%= comment.nickName %></span>
+                    <span class="commentTime"><%= formatTime(comment.createdAt, "short") %></span>
                 </div>
-                <div id="submitArea">
-                    <div id="nicknameInputDiv">
-                        <label for="nicknameInput">Nickname</label>
-                        <span class="commentFormInput"><input class="form-control inputBox" type="text" id="nicknameInput"></span>
-                    </div>
-                    <div id="passwordInputDiv">
-                        <label for="passwordInput">Password</label>
-                        <span class="commentFormInput"><input class="form-control inputBox" type="password" id="passwordInput"></span>
-                    </div>
-                    <div id="commentSubmit">
-                    <input type="submit" id="commentSubmitBtn" value="Post">
-                    </div>
-                </div>
-                </form>
+                <div class="commentEditRoute"><span class="editRoute" id="edit_<%= comment._id %>" onclick="editComment('<%= comment._id %>')">Edit</span></div>
+                <div class="commentDeleteRoute"><span class="deleteRoute" id="delete_<%= comment._id %>" onclick="deleteComment('<%= comment._id %>')">Delete</span></div>
             </div>
-            <div id="commentList">
-                <% post.comments.forEach(function(comment){ %>
-                    <div class="commentDiv" id="div_<%= comment._id %>">
-                        <div class="container-fluid commentDisplay">
-                            <div class="commentInfo">
-                                <span class="commentNickname"><%= comment.nickName %></span>
-                                <span class="commentTime"><%= formatTime(comment.createdAt, "short") %></span>
-                            </div>
-                            <div class="commentEditRoute"><span class="editRoute" id="edit_<%= comment._id %>" onclick="editComment('<%= comment._id %>')">Edit</span></div>
-                            <div class="commentDeleteRoute"><span class="deleteRoute" id="delete_<%= comment._id %>" onclick="deleteComment('<%= comment._id %>')">Delete</span></div>
-                        </div>
-                        <div class="commentContent" id="display_<%= comment._id %>"><%= comment.content %></div>
-                        <textarea class="form-control commentEditInput" id="change_<%= comment._id %>" style="display:none;"><%= comment.content %></textarea>
-                        <div class="commentAuth">
-                            <div class="passwordAuth" id="authPasswordGroup_<%= comment._id %>" style="display:none;">
-                                <label for="authPassword_<%= comment._id %>">Password</label>
-                                <span class="commentPasswordInput"><input class="form-control authPasswordForm" type="password" id="passwordInput_<%= comment._id %>"></span>
-                            </div>
-                            <div class="authGroup">
-                            <div class="passwordQ" id="pwQ_<%= comment._id %>" style="display:none;">You Sure?</span></div>
-                            <div class="deleteAuth" id="deleteAuth_<%= comment._id %>" style="display:none;">
-                                <button class="deleteBtn" type="submit" onclick="deleteAuth('<%= comment._id %>')">CONFIRM</button>
-                            </div>
-                            <div class="editAuth" id="editAuth_<%= comment._id %>" style="display:none;">
-                                <button class="editBtn" type="submit" onclick="editAuth('<%= comment._id %>')">POST</button>
-                            </div>
-                            <div class="cancelAuth">
-                                <button class="cancelBtn" id="cancelChange_<%= comment._id %>" onclick="cancelAction('<%= comment._id %>')" style="display:none;">CANCEL</button>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                <% }) %>
+            <div class="commentContent" id="display_<%= comment._id %>"><%= comment.content %></div>
+            <textarea class="form-control commentEditInput" id="change_<%= comment._id %>" style="display:none;"><%= comment.content %></textarea>
+            <div class="commentAuth">
+                <div class="passwordAuth" id="authPasswordGroup_<%= comment._id %>" style="display:none;">
+                    <label for="authPassword_<%= comment._id %>">Password</label>
+                    <span class="commentPasswordInput"><input class="form-control authPasswordForm" type="password" id="passwordInput_<%= comment._id %>"></span>
+                </div>
+                <div class="authGroup">
+                <div class="passwordQ" id="pwQ_<%= comment._id %>" style="display:none;">You Sure?</span></div>
+                <div class="deleteAuth" id="deleteAuth_<%= comment._id %>" style="display:none;">
+                    <button class="deleteBtn" type="submit" onclick="deleteAuth('<%= comment._id %>')">CONFIRM</button>
+                </div>
+                <div class="editAuth" id="editAuth_<%= comment._id %>" style="display:none;">
+                    <button class="editBtn" type="submit" onclick="editAuth('<%= comment._id %>')">POST</button>
+                </div>
+                <div class="cancelAuth">
+                    <button class="cancelBtn" id="cancelChange_<%= comment._id %>" onclick="cancelAction('<%= comment._id %>')" style="display:none;">CANCEL</button>
+                </div>
+                </div>
             </div>
         </div>
-        <div class="col-xs-2"></div>
-    </div>
+    <% }) %>
 </div>
+<% include ./partials/colfooter.ejs %>
 
 <script type="text/javascript">
     var postId = "<%= post._id %>";

@@ -1,7 +1,7 @@
 .postTitle {
     font-family: 'Roboto', sans-serif;
     font-weight: 900;
-    font-size: 1.6em;
+    font-size: 1.8em;
     text-align: center;
     padding-top: 0.6em;
     padding-bottom: 0.6em;
@@ -9,9 +9,9 @@
 }
 
 .postDate {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    font-size: 1.1em;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 1em;
     text-align: center;
     padding-top: 0.6em;
     padding-bottom: 0.6em;
@@ -19,7 +19,7 @@
 }
 
 .postContent {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     font-size: 1.1em;
     padding-top: 1em;
@@ -28,8 +28,6 @@
 }
 
 .postContent p {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 400;
     padding-bottom: 0.5em;
     margin: 0;
 }
