@@ -19,20 +19,26 @@
     display: table;
     width: 100%;
     padding-bottom: 3em;
+    table-layout: fixed;
+}
+
+#submitRow {
+    width: 38em;
+    display: table-cell;
 }
 
 #commentList {
     padding-bottom: 3em;
 }
 
-#nicknameInputDiv {
+#nicknameInputDiv, #passwordInputDiv {
     display: table-cell;
-    padding-right: 1em;
+    text-align: left;
+    width: 19em;
 }
 
-#passwordInputDiv {
-    display: table-cell;
-    padding-right: 1em;
+.commentFormInput {
+    width: 11em;
 }
 
 #commentSubmit {
@@ -47,10 +53,7 @@
     color: white;
     text-align: center;
     border: none;
-    padding-left: 1.2em;
-    padding-right: 1.2em;
-    padding-top: 0.3em;
-    padding-bottom: 0.3em;
+    padding: 0.3em 1.2em 0.3em 1.2em;
     display: table-cell;
 }
 
@@ -59,7 +62,7 @@
 }
 
 #submitArea label {
-    padding-right: 1em;
+    padding-right: 0.9em;
     font-size: 1.1em;
 }
 
@@ -178,10 +181,7 @@
     color: white;
     text-align: center;
     border: none;
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-top: 0.3em;
-    padding-bottom: 0.3em;
+    padding: 0.3em 1em 0.3em 1em;
     display: inline-block;
 }
 
@@ -203,7 +203,7 @@
     width: 5.5em;
 }
 
-.deleteBtn {
+.deleteBtn, .editBtn {
     font-family: 'Raleway', sans-serif;
     font-weight: 400;
     font-size: 1.1em;
@@ -211,10 +211,7 @@
     color: white;
     text-align: center;
     border: none;
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-top: 0.3em;
-    padding-bottom: 0.3em;
+    padding: 0.3em 1em 0.3em 1em;
     display: table-cell;
 }
 
@@ -225,18 +222,47 @@
     width: 5.5em;
 }
 
-.editBtn {
-    font-family: 'Raleway', sans-serif;
-    font-weight: 400;
-    font-size: 1.1em;
-    background-color: #696969;
-    color: white;
-    text-align: center;
-    border: none;
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-top: 0.3em;
-    padding-bottom: 0.3em;
-    display: table-cell;
+
+@media screen and (max-width: 920px) {
+    #submitRow {
+        display: table-row;
+    }
+    #commentSubmit {
+        padding-top: 1em;
+        position: absolute;
+        width: 100%;
+    }
+    #commentSubmitBtn {
+        width: 100%;
+    }
+    #nicknameInputDiv, #passwordInputDiv {
+        width: 50%;
+    }
+    .commentFormInput {
+        width: 60%;
+    }
+    #submitArea label {
+        padding-right: 0.4em;
+    }
 }
 
+@media screen and (max-width: 510px) {
+    #submitRow {
+        display: table;
+        width: inherit;
+    }
+    #nicknameInputDiv, #passwordInputDiv {
+        display: table-row;
+        width: 100%;
+    }
+    #passwordInputDiv > label {
+        padding-top: 1em;
+    }
+    #submitRow label {
+        display: table-cell;
+    }
+    .commentFormInput, .inputBox {
+        display: table-cell;
+        width: 100%;
+    }
+}
