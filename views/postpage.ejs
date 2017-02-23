@@ -85,12 +85,12 @@
                     <span class="commentPasswordInput"><input class="form-control authPasswordForm" type="password" id="passwordInput_<%= comment._id %>"></span>
                 </div>
                 <div class="authGroup">
-                <div class="passwordQ" id="pwQ_<%= comment._id %>" style="display:none;">You Sure?</span></div>
+                <!--<div class="passwordQ" id="pwQ_<%= comment._id %>" style="display:none;">You Sure?</span></div>-->
                 <div class="deleteAuth" id="deleteAuth_<%= comment._id %>" style="display:none;">
                     <button class="deleteBtn" type="submit" onclick="deleteAuth('<%= comment._id %>')">CONFIRM</button>
                 </div>
                 <div class="editAuth" id="editAuth_<%= comment._id %>" style="display:none;">
-                    <button class="editBtn" type="submit" onclick="editAuth('<%= comment._id %>')">POST</button>
+                    <button class="editBtn" type="submit" onclick="editAuth('<%= comment._id %>')">UPDATE</button>
                 </div>
                 <div class="cancelAuth">
                     <button class="cancelBtn" id="cancelChange_<%= comment._id %>" onclick="cancelAction('<%= comment._id %>')" style="display:none;">CANCEL</button>

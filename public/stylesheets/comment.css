@@ -18,7 +18,7 @@
 #submitArea {
     display: table;
     width: 100%;
-    padding-bottom: 3em;
+    padding-bottom: 3.3em;
     table-layout: fixed;
 }
 
@@ -67,7 +67,7 @@
 }
 
 .commentDiv {
-    padding-bottom: 1.5em;
+    /*padding-bottom: 1.5em;*/
 }
 
 .container-fluid {
@@ -100,7 +100,7 @@
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     font-size: 1em;
-    padding-right: 3em;
+    padding-right: 1em;
     display: inline-block;
 }
 
@@ -139,13 +139,15 @@
 .commentAuth {
     width: 100%;
     display: table;
-    padding-top: 1em;
     table-layout: fixed;
+    margin-bottom: 0.5em;
+    height: 3em;
 }
 
 .passwordAuth {
     display: table-cell;
     width: 40%;
+    vertical-align: middle;
 }
 
 .passwordAuth label {
@@ -155,13 +157,14 @@
 
 .commentPasswordInput {
     display: inline-block;
-    width: 60%;
+    width: 50%;
 }
 
 .authGroup {
     display: table-cell;
     text-align: right;
-    width: 60%;
+    width: 12em;
+    vertical-align: middle;
 }
 
 
@@ -219,10 +222,10 @@
     /*display: table-cell;*/
     display: inline-block;
     text-align: right;
-    width: 5.5em;
+    width: 8em;
 }
 
-
+/* Move post button to next line */
 @media screen and (max-width: 920px) {
     #submitRow {
         display: table-row;
@@ -244,8 +247,24 @@
     #submitArea label {
         padding-right: 0.4em;
     }
+    #commentList {
+        padding-top: 2.3em;
+    }
+    .commentAuth label {
+        padding-right: 0.4em;
+    }
+    .commentEditRoute {
+        width: 3em;
+    }
+    .passwordQ {
+        display: none;
+    }
+    .editAuth, .deleteAuth {
+        width: 6.5em;
+    }
 }
 
+/* Nickname and password input divs take up a row each instead of sharing a row */
 @media screen and (max-width: 510px) {
     #submitRow {
         display: table;
@@ -264,5 +283,55 @@
     .commentFormInput, .inputBox {
         display: table-cell;
         width: 100%;
+    }
+}
+
+/* For post edit/delete, POST and CANCEL button needs to be moved to a new line */
+@media screen and (max-width: 450px) {
+    .passwordAuth {
+        display: table-row;
+        width: 100%;
+    }
+    .passwordAuth > label {
+        display: table-cell;
+        padding-top: 1em;
+    }
+    .authGroup {
+        display: table-row;
+    }
+    .commentPasswordInput {
+        display: table-cell;
+        width: 70%;
+    }
+    .authPasswordForm {
+        display: table-cell;
+        width: 100%;
+    }
+    /*.deleteAuth, .editAuth, .cancelAuth {*/
+    /*    display: inline-block;*/
+    /*    padding-top: 0.8em;*/
+    /*    width: 100%;*/
+    /*    text-align: center;*/
+    /*}*/
+    /*.deleteBtn, .editBtn, .cancelBtn {*/
+    /*    width: 100%;*/
+    /*}*/
+    /*.deleteAuth, .editAuth {*/
+        /*display: inline-block;*/
+    /*    padding-top: 0.8em;*/
+    /*    width: 100%;*/
+    /*    text-align: center;*/
+    /*}*/
+    /*.cancelAuth {*/
+    /*    float: right;*/
+    /*}*/
+    .authGroup {
+        display: table;
+        width: 100%;
+    }
+    .deleteAuth, .cancelAuth, .editAuth {
+        display: table-cell;
+        width: 50%;
+        padding-top: 0.8em;
     }
 }
