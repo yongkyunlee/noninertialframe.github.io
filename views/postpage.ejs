@@ -74,8 +74,11 @@
                     <span class="commentNickname"><%= comment.nickName %></span>
                     <span class="commentTime"><%= formatTime(comment.createdAt, "short") %></span>
                 </div>
-                <div class="commentEditRoute"><span class="editRoute" id="edit_<%= comment._id %>" onclick="editComment('<%= comment._id %>')">Edit</span></div>
-                <div class="commentDeleteRoute"><span class="deleteRoute" id="delete_<%= comment._id %>" onclick="deleteComment('<%= comment._id %>')">Delete</span></div>
+                <div class="commentRoutes">
+                    <span class="commentTimeBelow"><%= formatTime(comment.createdAt, "short") %></span>
+                    <div class="commentEditRoute"><span class="editRoute" id="edit_<%= comment._id %>" onclick="editComment('<%= comment._id %>')">Edit</span></div>
+                    <div class="commentDeleteRoute"><span class="deleteRoute" id="delete_<%= comment._id %>" onclick="deleteComment('<%= comment._id %>')">Delete</span></div>
+                </div>
             </div>
             <div class="commentContent" id="display_<%= comment._id %>"><%= comment.content %></div>
             <textarea class="form-control commentEditInput" id="change_<%= comment._id %>" style="display:none;"><%= comment.content %></textarea>

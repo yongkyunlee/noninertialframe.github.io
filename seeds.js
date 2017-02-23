@@ -20,23 +20,23 @@ function seedDB(){
         }
         console.log("Default admin - id: " + newAdmin.id + " pw: " + newAdmin.password);
     });
-    Comment.remove({}, function(err){
-        if (err) {
-            throw err;
-        }
-        console.log("comments cleared");
-    });
-    Post.find({}, function(err, posts){
-        if (err) {
-            console.log("error in finding all posts");
-            throw err;
-        }
-        posts.forEach(function(post){
-            post.comments = [];
-            post.save();
-        });
-        console.log("post comments cleared");
-    });
+    // Comment.remove({}, function(err){
+    //     if (err) {
+    //         throw err;
+    //     }
+    //     console.log("comments cleared");
+    // });
+    // Post.find({}, function(err, posts){
+    //     if (err) {
+    //         console.log("error in finding all posts");
+    //         throw err;
+    //     }
+    //     posts.forEach(function(post){
+    //         post.comments = [];
+    //         post.save();
+    //     });
+    //     console.log("post comments cleared");
+    // });
 }
 
 module.exports = seedDB;

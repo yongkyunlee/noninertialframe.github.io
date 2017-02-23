@@ -66,10 +66,6 @@
     font-size: 1.1em;
 }
 
-.commentDiv {
-    /*padding-bottom: 1.5em;*/
-}
-
 .container-fluid {
     padding: 0;
 }
@@ -104,8 +100,13 @@
     display: inline-block;
 }
 
-.commentEditRoute, .commentDeleteRoute {
+.commentRoutes {
     display: table-cell;
+    text-align: right;
+}
+
+.commentEditRoute, .commentDeleteRoute {
+    display: inline-block;
     text-align: right;
     width: 5em;
 }
@@ -225,6 +226,10 @@
     width: 8em;
 }
 
+.commentTimeBelow {
+    display: none;
+}
+
 /* Move post button to next line */
 @media screen and (max-width: 920px) {
     #submitRow {
@@ -264,7 +269,9 @@
     }
 }
 
-/* Nickname and password input divs take up a row each instead of sharing a row */
+/* Nickname and password input divs take up a row each instead of sharing a row
+ * Put comment title and date on different lines
+ */
 @media screen and (max-width: 510px) {
     #submitRow {
         display: table;
@@ -284,12 +291,38 @@
         display: table-cell;
         width: 100%;
     }
+    .commentInfo {
+        display: table;
+        padding-bottom: 0;
+    }
+    .commentDisplay {
+        padding-bottom: 0.7em;
+    }
+    .commentNickname {
+        display: table-row;
+        width: 100%;
+    }
+    .commentTime {
+        display: none;
+    }
+    .commentRoutes {
+        display: table;
+        width: 100%;
+    }
+    .commentTimeBelow {
+        display: table-cell;
+        text-align: left;
+    }
+    .commentEditRoute, .commentDeleteRoute {
+        display: table-cell;
+        text-align: right;
+    }
 }
 
 /* For post edit/delete, POST and CANCEL button needs to be moved to a new line */
 @media screen and (max-width: 450px) {
     .passwordAuth {
-        display: table-row;
+        display: table;
         width: 100%;
     }
     .passwordAuth > label {
@@ -307,24 +340,6 @@
         display: table-cell;
         width: 100%;
     }
-    /*.deleteAuth, .editAuth, .cancelAuth {*/
-    /*    display: inline-block;*/
-    /*    padding-top: 0.8em;*/
-    /*    width: 100%;*/
-    /*    text-align: center;*/
-    /*}*/
-    /*.deleteBtn, .editBtn, .cancelBtn {*/
-    /*    width: 100%;*/
-    /*}*/
-    /*.deleteAuth, .editAuth {*/
-        /*display: inline-block;*/
-    /*    padding-top: 0.8em;*/
-    /*    width: 100%;*/
-    /*    text-align: center;*/
-    /*}*/
-    /*.cancelAuth {*/
-    /*    float: right;*/
-    /*}*/
     .authGroup {
         display: table;
         width: 100%;
@@ -333,5 +348,14 @@
         display: table-cell;
         width: 50%;
         padding-top: 0.8em;
+    }
+    .deleteAuth, .editAuth {
+        text-align: left;
+    }
+    .cancelAuth {
+        text-align: right;
+    }
+    .deleteBtn, .editBtn, .cancelBtn {
+        width: 90%;
     }
 }
