@@ -2,7 +2,6 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
-    flash = require('connect-flash'),
     seedDB = require('./seeds'),
     app = express();
     
@@ -23,7 +22,6 @@ console.log("mongoose connected");
 
 app.use(express.static(__dirname+"/public"));
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(flash());
 app.set('views', __dirname+'/views');    
 app.set('view engine', 'ejs');
 seedDB();
