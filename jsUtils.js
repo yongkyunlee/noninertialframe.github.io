@@ -11,5 +11,16 @@ module.exports = {
         }
         var formatDate = yyyy + '.' + mm + '.' + dd;
         return formatDate;
+    },
+    formatTitle: function(inputStr) {
+        var resultStr = "";
+        for (var i = 0; i < inputStr.length; i++) {
+            if (inputStr[i] == '^') {
+                resultStr += " ";
+            } else {
+                resultStr += inputStr[i];
+            }
+        }
+        return resultStr;
     }
 };

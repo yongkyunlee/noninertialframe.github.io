@@ -30,7 +30,7 @@
     }
 }
 
-@media screen and (max-width: 470px) { /* When title becomes two lines */
+@media screen and (max-width: 500px) { /* When title becomes two lines */
     #main {
         margin-top: 6.5em;
     }

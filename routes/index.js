@@ -2,6 +2,7 @@ var express = require('express'),
     fs = require('fs'),
     Post = require('../models/post.js'),
     middleware = require('../middleware/auth'),
+    jsUtils = require('../jsUtils.js'),
     router = express.Router();
     
 /* TODOs
@@ -54,7 +55,7 @@ router.post('/loginupdate', middleware.checkAdmin, function(req, res){
                         console.log(files[i] + " updated");
                     });
                 } else {
-                    var title = files[i].substring(0, files[i].length - ".txt".length);
+                    var title = jsUtils.formatTitle(files[i].substring(0, files[i].length - ".txt".length));
                     var fileName = files[i];
                     var newPost = {title: title, fileName: fileName, content: data};
                     Post.create(newPost, function(err, result){

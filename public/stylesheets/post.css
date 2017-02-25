@@ -28,8 +28,15 @@
 }
 
 .postContent p {
-    padding-bottom: 0.5em;
+    padding-bottom: 1.2em;
     margin: 0;
+}
+
+.postContent a {
+    color: #3366cc;
+}
+.postContent a:hover {
+    color: #C0C0C0;
 }
 
 .postFooter {
@@ -37,9 +44,27 @@
     font-weight: 400;
     font-size: 1.1em;
     text-align: center;
-    padding-bottom: 2em;
+    padding-bottom: 3em;
 }
 
 i {
     padding-right: 0.2em;
+}
+
+@media screen and (max-width: 470px) { /* When title becomes two lines */
+    .postTitle {
+        font-size: 1.5em;
+    }
+}
+
+@media screen and (max-width: 400px) { /* When title becomes two lines */
+    .postTitle {
+        font-size: 1.4em;
+    }
+    .postDate {
+        font-size: 0.9em;
+    }
+    .postContent {
+        font-size: 1em;
+    }
 }

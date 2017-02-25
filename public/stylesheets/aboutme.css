@@ -1,0 +1,102 @@
+#aboutMeTitle {
+    font-size: 1.8em;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
+    padding: 0 0 0.5em 0;
+    margin: 0;
+}
+
+.section {
+    padding-top: 2em;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+.sectionTitle {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+    font-size: 1.4em;
+}
+
+.subSection {
+    padding-top: 1.3em;
+    padding-bottom: 0.5em;
+}
+
+.subSectionTitle, .subSectionSubTitle {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 1.2em;
+}
+
+.subSectionDate {
+    padding-bottom: 1em;
+}
+
+.subSectionContent {
+    padding-bottom: 0.5em;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 1.1em;
+    line-height: 2;
+}
+
+.subSectionContent ol {
+    padding-left: 19px;
+}
+
+.subSectionContent ul {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.subSectionContent a {
+    color: #3366cc;
+}
+.subSectionContent a:hover {
+    color: #C0C0C0;
+}
+
+.subSectionContent li {
+    padding-top: 0.6em;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1000px) {
+    .section {
+        padding-right: 10%;
+        padding-left: 10%;
+    }
+}
+
+@media screen and (min-width: 641px) and (max-width: 767px) {
+    .section {
+        padding-right: 0;
+        padding-left: 0;
+    }
+}
+
+@media screen and (min-width: 501px) and (max-width: 640px) {
+    .section {
+        padding-right: 10%;
+        padding-left: 10%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .section {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    #aboutMeTitle {
+        font-size: 1.6em;
+    }
+    .sectionTitle {
+        font-size: 1.2em;
+    }
+    .subSectionTitle, .subSectionSubTitle {
+        font-size: 1.1em;
+    }
+    .subSectionContent {
+        font-size: 1em;
+    }
+}
