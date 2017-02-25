@@ -1,0 +1,66 @@
+<p>
+I enjoy sharing my story - story of my work, thoughts, and life. There exist various 
+platforms that could satisfy my needs. Yet, using them would dilute the identity of 
+my stories because my thoughts would reside in a foreign world. 
+Though Facebook or Google Drive Documents are enough to cover my volatile emotions, 
+I wanted a website that represents me and the projects I do - a domain, solely 
+for me, to portray the trace of the professional side of my life. I wish the visitors 
+and readers of <strong>Noninertial Frame</strong>, including myself, could look into 
+the steps I take and see how I learn and grow. We would hopefully find inspiration and 
+motivation to take to our own lives.
+</p>
+<p>
+Noninertial frame, by definition, is <i>a frame of reference that moves with the object, 
+so that the moving object appears to violate Newton's laws of motion since it accelerates 
+despite having no horizontal forces on it (Dictionary.com). </i> It is a frame whose velocity 
+is continuously changing and in which classical laws of mechanics do not work. It is also 
+the real frame we live or should live in because our world moves every moment. 
+"Non-inertial Frame" is also the the name of the high school physics project team of 
+my best friend and me. It was the first project I pulled an all-nighter for of 
+my own will. Such meanings make <strong>Noninertial Frame</strong> a suitable 
+name of a place to represents myself. The progress and results of my projects and  
+what I learned or felt in the process will be the primary content. This  
+website uses MongoDB, Node.js, and Express.js stack and Heroku as its server. 
+Its source code is uploaded at my <a href="https://github.com/noninertialframe/noninertialframe.github.io">
+Github repository</a>. I want to keep track of and share my progress. Sharing the 
+code would be both beneficial for me, pushing me to keep the code clean, and anyone else 
+who also plans to create his or her own website. It would be grateful to receive commits, feedback, or 
+comments under the posts.
+</p>
+<p>
+Building <strong>Noninertial Frame</strong> has taken me a little more than two months, 
+including the time to learn web development. I 
+began by studying a Node.js book and selectively listening to lectures of 
+<a href="https://www.udemy.com/the-web-developer-bootcamp/"><i>The Web Development Bootcamp</i></a> on Udemy. 
+Since the amount of time I could be on the computer is highly restricted in the 
+current environment, around an hour per day on average, I first tried to write the 
+code out on paper. This plan turned out to be 
+extremely difficult and demotivating because I was not familiar with Javascript or 
+the framework and this project involved web designing. Not being able to search Google 
+as I code was pretty stressful. I just started to code on computer. Though coding 
+became much more easier, the amount time for coding became limited. This restraint 
+has had both ups and downs. I could stay fully concentrated for the given time because 
+I felt the pressure to complete as many tasks as possible. I felt the joy of writing code 
+when I achieved the goals planned for each day. However, I sometimes had to leave the computer 
+at the peak of my focus or with my current progress unfinished. The frustration in such 
+situations hindered me from falling asleep for a while. Nevertheless, in general, 
+the time constraint allowed me to enjoy taking small but steady steps forward 
+and to anticipate a more complete state of my website on the following day. 
+Indeed, I am thinking of using a stopwatch for my work or study to raise efficiency 
+when I return to school. Other than the environment I am in, the design aspect has 
+been challenging for me. While I quickly caught a grasp of how backend works and 
+interacts with the client side, I did not thoroughly understand web design 
+using CSS; sometimes, I could not expect how my CSS would turn out on the screen.
+I eventually succeeded in creating the design I pictured through countless numbers 
+of trial and error and Google search.
+</p>
+<p>
+Building <strong>Noninertial Frame</strong> was not as difficult as I thought at first; 
+in fact, writing high-quality posts seems to be thousand times harder. What is important 
+is that I have led the project to its final stage of opening it to the world, instead of 
+leaving it as a prototype. It 
+has been a smooth takeoff; and, its enthusiasm and excitement is sufficient to drive me to 
+the next project, which is related to data and machine learning. 
+The due date for the next project will be around July, unless its scale becomes really large, 
+and its progress will be updated on April or May. KEEP UP!
+</p>
