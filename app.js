@@ -17,10 +17,7 @@ var indexRoute = require('./routes/index'),
     commentRoute = require('./routes/comments');
 
 mongoose.Promise = global.Promise;
-//mongodb://<dbuser>:<dbpassword>@ds147069.mlab.com:47069/noninertialframe
 var url = process.env.DATABASEURL || "mongodb://localhost/noninertialframe";
-//var url = "mongodb://localhost/noninertialframe"
-console.log(process.env.DATABASEURL);
 mongoose.connect(url);
 console.log("mongoose connected");
 
