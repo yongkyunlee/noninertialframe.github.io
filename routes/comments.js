@@ -53,8 +53,6 @@ router.delete('/:comment_id', middleware.commentAuth, function(req, res){
         } else {
             // erase the comment from post.comments and delete comment
             var commentObjId = mongoose.Types.ObjectId(req.body._id);
-            console.log(post.comments);
-            console.log(commentObjId);
             Comment.findOneAndRemove({_id: commentObjId}, function(err, result){
                 if (err) {
                     console.log("error deleting comment");
@@ -65,11 +63,12 @@ router.delete('/:comment_id', middleware.commentAuth, function(req, res){
             //arrayUtil.findAndRemove(post.comments, '$oid', req.body._id);
             var commentIndex = post.comments.indexOf(commentObjId); 
             if (commentIndex > -1) {
-                post.comments.splice(commentIndex);
+                post.comments.splice(commentIndex, 1);
             } else {
                 console.log("comment id: " + req.body._id + " not found in post.comments");
             }
             post.save();
+            console.log(post.comments);
             console.log('comment deleted');
             res.send({success: true, commentNum: post.comments.length});
         }
