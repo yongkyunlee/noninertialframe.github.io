@@ -1,0 +1,183 @@
+<p>
+<strong>Stock Price Prediction</strong> project is my second project in the army. 
+After building <i>Noninertial Frame</i>, I spent some time studying algorithm and 
+trying Django framework, with which I built a mini blog. From around late March, 
+I began working on this project. 
+I wanted to find out whether a computer program could predict the stock market. After all, investors 
+make decision based on numbers as well. I was aware that applying machine learning 
+to investment is not really geninue because it is something that everybody had thought of and many people had 
+already tried; nevertheless, I still jumped in to create yet another investment software.
+</p>
+<p>
+My project was composed of three parts: study on finance/investment, data collection, and 
+application of machine learning. I did not have any knowledge on finance nor investment 
+before. I read a book<sup>(1)</sup> on how to interpret financial statements and how to use it for stock 
+investment; here, I learned the meaning and the calculation of numerous financial ratios, 
+like PER(P/E ratio), CPR(Price-to-Cash-Flow Ratio), PEG(Price/Earnings to Growth Ratio), and etc. 
+Then, I read online articles and classic research papers on several investment techniques, 
+including value, momentum, quant, and contrarian investment<sup>(2)</sup>.
+</p>
+<p>
+Most people who write investment software use quant investment since it is a short-term 
+strategy, potentially creating income in a very short period of time. However, I chose to work on 
+value investment; quant has more risk than value investment; quant depends on the speed of obtaining 
+and processing data, and I did not want to work on this type of technology; value investment 
+is a more natural and effective match to machine learning whereas quant possesses inherent randomness; 
+there exist multiple studies and investors promoting the power of value investment. 
+For example, there is a classic metric called Piotroski F-score, introduced in a very 
+famous and classic finance research paper<sup>(3)</sup>. Though the research may be outdated and not work for 
+current stock market, a simple idea is to turn the components of F-score into the features of 
+machine learning. Or another easy thought is to use all the financial ratios or metrics 
+investment giants have pointed out as features. These thoughts led me to delve into 
+value investment. I have access to a great amount of historical data and people's 
+behavior is pretty constant over time, so the prediction of price change based on companies' financial statements 
+seemed probable to me.
+</p>
+<p>
+After getting an idea of what to do, I started to collect data. Since I am in the army, I 
+could not use APIs provided by securities firms (they do not provide past financial  
+data anyways). Hence, I crawled data from web pages using Beautifulsoup. Past stock 
+prices were easy to crawl as they were cleanly organized in Naver Finance. Financial 
+statement data was the real problem. There are some websites, such as sejongdata.co.kr and 
+kind.krx.co.kr, which hold data in "easy-to-crawl" formats; yet, they only provide few 
+criteria of financial statement. I thought they would be insufficient for thorough analysis, 
+considering that many features are needed for effective neural network. Then, I began to 
+look into <a href="https://www.dart.fss.or.kr">DART</a>. DART is a government website that has 
+all the historical financial statement data of public companies. As it can be expected 
+from government-run websites, DART is also unorganized. The data format differes from 
+company to company and from time to time. Some companies even upload data with error. The 
+following image demonstrates some of the table types used in DART. There are many 
+more styles and formats of tables than what are shown below.
+</p>
+<div class="image">
+<img src="/images/dart_tables.PNG" alt="dart_tables" style="width:70%;">
+</div>
+<p>
+The tables above may seem similar in eyes, but their html sources are drastically different with inconsistent 
+usage of html elements. For example, one table uses "tr" for a column and another 
+uses "tr" for a row. The names and positions of tables vary widely for each company. 
+The format has begun to be pretty unified since 2016, but I needed data starting from 
+year 2000, so I just had to crawl DART despite its state.
+</p>
+<p>
+At first, I used Scrapy for crawling but changed to Beautifulsoup after a short time. 
+Scrapy crawls web asynchroniously, so it was pretty complicated to organize data in the desired 
+order. There is an option for synchronous crawling, but it did not work well. Also as my 
+code became more complex, I was not able to manage my code in a suitable way for Scrapy. 
+Putting everything in one request was a possibility, but then there was no point of using Scrapy 
+in such code style. I moved on to Beautifulsoup, which worked 
+in a more intuitive way for me. Looking back, Beautifulsoup was the right choice because it became 
+easier to add and fix small pieces of codes to cover all the edge cases that appeared for basically every company 
+I crawled.
+</p>
+<p>
+This is the <a href="https://github.com/noninertialframe/financial-data-crawl_DART">link</a> to my Github repository 
+of the DART crawling code. 
+The code only works for the companies I tried. In truth, it does not perfectly work 
+for one or two of them because typing the numbers manually was faster than adding code 
+for some complicated exception cases. 
+In the beginning, I thought my code would eventually be able to cover all the weird formats and edge cases so that the point of 
+"singularity" would come. Due to the repeated surprises at the existence of so many "creative" 
+formats, I became dubious on the possbility to crawl all the companies with a single code. 
+I eventually obtained data from 2000 to the first quarter of 2017 of eight companies in Korean food industry and gathered 
+about 400 data points.
+</p>
+<p>
+The next step was to apply machine learning. The raw financial data were first processed 
+into financial ratios, including PER, ROE, PEG, Current-Ratio, and etc, and were scaled. 
+The output variable was the change in stock price between two quarters. 
+The quaterly financial reports are uploaded late in the subsequent quarter. To be more specific, 
+a report for the first quarter is posted in late May, so I presumed that such data would influence 
+the stock price of the third quarter instead of the second quarter. As for stock price, 
+I tried mean, median, and maximum price of the quarter. At first, I approached prediction in 
+regression; however, the regression result was difficult to intrepret and its error was too large, 
+making me conclude it had no predictive power. The figure below is the residual plot of linear regression. 
+The y-axis indicates the difference between predicted value and real value. Most 
+of predicted values are more than 10% away from real value, implying that regression is not 
+suitable for accurate prediction even considering possible improvements I can make.
+</p>
+<div class="image">
+<img src="/images/residual_plot.PNG" alt="residual_plot" style="width:40%;">
+</div>
+<p>
+I pivoted the prediction problem to classification. I divided the percentage of stock price change 
+into several classes and used machine learning to predict which class of price change 
+the input variable would fit in. Using Scikit-learn, I tried three types of machine learning: 
+logistic regression, support vector classification (Gaussian kernel), and neural network. 
+I used 20% of data as test data. The training result varied widely according to the 
+selection of parameters and features. I exhaustively searched through a range of possible 
+combinations of parameters and features and chose one with the best result i.e. how much 
+of the test data were classified correctly. The best combination and its accuracy differs 
+from how the price changes are classified. The table below is the result of experiment.
+</p>
+<div class="image">
+<img src="/images/stock_prediction_result.PNG" alt="stock_prediction_result" style="width:65%;">
+</div>
+<p>
+Look at how the stock price change is classified. Though the number of classes is the same, 
+merging the negative price change as one class improves the accuracy significantly. 
+One possible explanation is that unexpected fall of stock price, possibly due to external factors, is 
+more common than unexpected rise. As anomalies occur more often in negative class, looking at 
+such domain as one chunk prevents the learning process from being hindered by few special cases. 
+Another interesting point is that some features were included in most combinations; PBR and ROE were 
+included most often. Note that PBR and ROE are two of the most classic ratios people 
+look at. Warrent Buffet is a big supporter of ROE. This tendency may 
+(though not supported by statistical evidence) imply that these two ratios are indeed what 
+people refer to a lot when they trade stocks.
+</p>
+<p>
+I tried to find ways to improve the program. Most of all, I need more data points. 
+Though I used relatively small number of features, 400 points are not sufficient for 
+neural network or even SVC to be effective, considering there exist a great deal of 
+anomalies in stock price. I also need better features. Due to the lack of time to 
+collect data, I could not use as many features as I originally planned to. The basic 
+ratios I used as features are related to each other because they use same numerators or 
+denominators, causing lack of diversity. Another problem was feature scaling. I used traditional scaling method on 
+my input data, based on average and standard deviation. As companies' sizes 
+are all different, there might be a better way to scale the features. There are 
+interesting points left to observe; what happens if I use yearly price change rather than quaterly 
+price change; what is the property of a period when the maximum price and mean price differs a lot; 
+whether the price changes within a quarter can be predicted.
+</p>
+<p>
+There are important points I learned from the stock prediction project. 
+First, data collection is an arduous process. Though DART seems to hold data in 
+a regularized format, it took me a large amount of time. Some 
+startups use sales of data as their business model. I used to be skeptical of such appraoch, 
+but now I think that it may be a valid model. Second, I learned that wise planning of 
+time usage is crucial. I did not have specific schedule for the project even after realizing 
+the difficulty of data crawling. I ended up with insufficient amount of time left to spend for analyzing the 
+machine learning results, conducting various experiments, and enhancing the quality of 
+learning. I could not build a strong core of the software. Looking back, I should 
+have started off with summarized data that well-organized websites provide and 
+crawl DART if more data were neccessary. Third, I felt the necessity to 
+learn math, especially probability and statistics. In the current machine learning and AI 
+buzz, I have been concerned about programmers merely pushing everything into the neural network and 
+expecting some magic to happen. I feel that was what I did in this project. Though I 
+endeavored to apply mathmatical intuition and my insight, I could not really 
+figure out "how" and "what" to do. Deepening my knowledge in this field would help me 
+cook data better.
+</p>
+<p>
+I judged that to conduct experiments and improve the stock prediction project, I need more data because 
+the best accuracy is too low and not enough features could be used as input. 
+As it could be guessed from the description of data collection process, crawling DART is difficult to be scaled. 
+In other words, it would take me almost proportional amount of time for the number of data points I gather, and 
+the permitted time to use a computer is deficient in my current environment. Thus, I decided to come back to the 
+investment software after finishing my service and delve more seriously then. Now, I am 
+moving on to another project.
+</p>
+<p>
+My next project is also based on machine learning but on much more interesting topic than 
+investment; I have not fixed on one, but the topic is going to be amusing to the general public. 
+My desired deadline for the next project is around late October to early November. 
+This time, I may work with a machine learning specialist, so I expect the project 
+to be more complete and its quality to be higher. It is time to move on.
+</p>
+<p>
+References<BR/>
+(1) Lee, Kangyeon. Choosing Good Stocks Using Financial Statement. Kyungki-do: Iremedia, 2016. Print.<BR/>
+(2) Lakonishok, Josef, Robert Vishny, and Andrei Shleifer. "Contrarian Investment, Extrapolation, and Risk." (1993): n. pag. Web.<BR/>
+(3) Piotroski, Joseph D. "Value Investing: The Use of Historical Financial Statement Information to Separate Winners from Losers." 
+Journal of Accounting Research 38 (2000): 1. Web.<BR/>
+</p>

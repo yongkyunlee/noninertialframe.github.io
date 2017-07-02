@@ -51,6 +51,20 @@ i {
     padding-right: 0.2em;
 }
 
+.image {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 1em;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+}
+
 @media screen and (max-width: 470px) { /* When title becomes two lines */
     .postTitle {
         font-size: 1.5em;
