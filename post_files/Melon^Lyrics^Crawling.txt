@@ -1,14 +1,15 @@
 <p>
 It has been a while since I wrote a blog post. 
 I was acutally offered an internship position recently by the VP of engineering of a hot startup thanks to my blog, so I decided to give an update. 
-I first worked on a deep learning music project for around 3 months but changed to the current lyric generation project. 
+(I really need to improve the blog itself as well.) 
+I had worked on a deep learning music project for around 3 months, but I started lyric generation project on November. 
 The process of collecting music data was not scalable. Though there are open data sets with 30 seconds of foreign music clips, I wanted Korean idol songs as my data. 
-As I do not have enough time due to the military service, I really need to be able to collect data quickly and spend most time on the core of the project. 
-Unlike music, lyrics are relatively easy to crawl because they are open online. 
+As I do not have enough time due to the military service, I really need to be able to collect data quickly and spend most time on the core of the project i.e. deep learning. 
+Unlike music, lyrics are relatively easy to crawl because they are open and free. 
 </p>
 <p>
-This blog post is about crawling lyrics from Melon, the largest Korean music streaming website. 
-I crawled Naver at first, but the lyrics uploaded on Naver ware subpar with many grammatical errors and strange line changes. 
+This blog post is about crawling lyrics from Melon, the largest music streaming website in Korea. 
+I crawled Naver Music at first, but the lyrics uploaded there were subpar with many grammatical errors and strange line changes. 
 Since I still have a long way to go for the actual lyric generation project, I will write about this little sub-project first. 
 Here is the <a href=https://github.com/noninertialframe/melon_lyrics_crawl>link</a> to my Github repository of Melon crawling code. 
 I will compare BeautifulSoup and Selenium and explain some interesting points of the code.
@@ -16,103 +17,108 @@ I will compare BeautifulSoup and Selenium and explain some interesting points of
 <p>
 BeautifulSoup (BS from now) and Selenium are tools that could be used for crawling websites. 
 BS is a Python package for parsing HTML or XML whereas Selenium is a framework that automates browsers i.e. control browsers with code or script. 
-Since BS can only parse html/xml, it has many limitations especially when crawling commercial websites (including Melon) that load contents dynamically using javscript. 
+Since BS can only parse html/xml, it has many limitations especially when crawling commercial websites (including Melon) that load contents dynamically with javscript. 
 Selenium can do almost everything that could be done on a website like logging in, downloading images, and many more, making it a versatile tool for web crawling.
 </p>
 <p>
-I had only used BS before because I could not set Selenium up on Cloud9.  I could not figure out how to launch webdriver on C9. 
+I had only used BS before because I could not set Selenium up on Cloud9.  I could not figure out how to launch a webdriver on C9. 
 I am on a vacation right now, so I can use Selenium on my laptop. 
-Though crawling is an one time job, I wanted to find the best solution and keep my code clean so that others can use my code or at least refer to my code when they crawl lyrics from Melon. 
-I actaully wanted to create an open source database of Korean lyrics to help NLP research, but I think such action is illegal because lyrics are intellectual properties.
+Though crawling is a one time job, I wanted to find the best solution and keep my code clean so that others can use my code or at least refer to my code when they do the same work. 
+I actually wanted to create an open source database of Korean lyrics to help NLP research, but I think such action is illegal because lyrics are intellectual properties.
 </p>
 <p>
 I will explain how Melon is structured. 
 On every artist page, there is a list of his or her songs. Each list contains 50 songs, and there are list indices at the bottom of the page. 
 When the artist page is opened, the first list is loaded. The lists after the first can only be loaded dynamically. 
 href tag has value "javascript:pageObj.sendPage('51')" as the left screenshot below shows. 
-The second list can only be loaded with this function by clicking this a tagged link. 
+The second list can only be loaded with this function by clicking the a tag link. 
 In other words, there exists no way (at least for me) to load the lists of songs statically as an html source.<br>
 Each list is a table with 50 songs whose information is organized in one row for each. 
 There is a button that is linked (href="javascript: melon.link.goSongDetail('song_id');") to the song information page as shown in the rigth screenshot below. 
 Song information page has a straight forward structure.
 </p>
 <div class="image">
-<img src="/images/melon_structure.PNG", alt="melon_structure", style="width:65%;">
+<img src="/images/melon_structure.png", alt="melon_structure", style="width:100%;">
 </div>
 <p>
 I coded three different ways to crawl:<br>
 1) use Selenium in a raw and effective way (option: --selenium_raw)<br>
-2) collect song id's first then use Selenium to crawl each song (option: --selenium)<br>
-3) collect song id's first then use BS to crawl each song. (option: --bs4)
+2) collect all the song ids first then use Selenium to crawl each song (option: --selenium)<br>
+3) collect all the song ids first then use BS to crawl each song (option: --bs4)
 </p>
 <p>
 Method 1)<br>
-For each song list, every song is iterated and its song information button is clicked. 
+For each song list, every song is iterated and its information button is clicked. 
 The browser is redirected to the song information page, and the lyric is crawled from the page just opened. 
 To return to the song list page, browser opens the previous page again. 
-When every song has been iterated, the button that loads the next song list is clicked. 
-As the browser has to open the previous page for every song, it makes many unncessary HTTP requests. 
-Though it would be more efficient to use open a new tab or window, I could not find a way to open a javascript call on a new tab or window.
+When every song in the list has been iterated, the button that loads the next song list is clicked.<br>
+As the browser has to open the previous page for every song, it repetitively makes HTTP requests for the same page. 
+I could not find a way to open a page loaded by javascript call on a new tab or window.
 </p>
+<p>
 Method 2)<br>
-To solve the problem of constantly going back and forth in method 1, the ids of every song are collected by iterating through the song lists. 
-The parameter of the "goSongDetail" function in href is the id. The url of song info page can be easily created with song id. 
-The song info pages are opened on the same browser consecutively and crawled using Selenium.
+To solve the problem of constantly going back and forth in method 1, only the ids of all the songs are collected in an iteration through the song list. 
+The song information button is not clicked in this iteration stage. 
+The parameter of the "goSongDetail" function in href is the song id. 
+After every song list has been looked at, the song info pages of collected ids are consecutively opened on the same window and crawled with Selenium.
+</p>
 <p>
 Method 3)<br>
 This method is almost the same as method 2 except that BS is used, instead of Selenium, for crawling song info page. 
-The page source is obtained after opening the url on the browser.
+The page source can be obtained after opening the url on the browser because Selenium needs to load the dynamic content for BS to read.
 </p>
 <p>
-The figure below is the comparison of profiled result for three methods.<br>
-The function that takes the most time is "method 'recv_into' of '_socket.socket' objects." 
+The screenshots below are the profile results of three methods.<br>
+The function taking the most amount time is "method 'recv_into' of '_socket.socket' objects." 
 This <a href="https://docs.python.org/3/library/socket.html">function</a> receives data from the socket. 
 Other functions take less than 1% of this function. 
-However when BS is used, these functions accumulate to make a visible performance gap. 
-The time consuming functions used by BS are html paser and regex functions. 
-They account for about 25s of 280s, leading to almost 10% of the total time taken. 
+However when BS is used, these seemingly light functions accumulate to create a visible performance gap. 
+Such functions conduct html pasing and regex operations. 
+They account for about 25s of 280s (compared to 240s for method 2), which is almost 10% of the total time. 
+To summarize, collecting all the song ids at once and then crawling each one using Selenium (method 2) is the best solution.
 </p>
 <div class="image">
-<img="/images/profile_results.PNG", alt="profile_results", style="width:50%;">
+<img src="/images/profile_results.png", alt="profile_results", style="width:100%;">
 </div>
 <p>
 Using Selenium is more convenient because BeautifulSoup is not not so beautiful. 
 The most annoying aspect of BS is that child elements can only be accessed from the parent element. 
-Selenium directly locates elements using class name or id even from the top level of elements; 
-however, with BS, only direct children can be accessed forcing me to dig into many layers of elements. 
-It takes two or three times more lines of code and debugging time as the page structures of complex websites are pretty confusing.
+Selenium directly locates elements by class name or id even from the top level of the tree; 
+however, with BS, only direct children can be located forcing me to manually dig into layers of divs. 
+It takes two or three times more lines of code and debugging time.
 </p>
 <p>
 Selenium has its weakness as well. 
-Without appropriately waiting until the target data is loaded, the program will throw an error. 
-I could not get implicitly_wait() to work, so I manually made the code wait until the element to be fetched becomes present (EC.presence_of_element_located) or the previous page becomes stale (EC.staleness_of). 
+Without appropriately waiting until the target element is loaded, the program will throw an error. 
+I could not get implicitly_wait() to work, so I manually made the code wait until the element to be fetched becomes present (EC.presence_of_element_located()) or the previous page becomes stale (EC.staleness_of()). 
 Figuring out when to wait before reading the content was confusing.
-Staleness checks whether the remains of previous page exist, so it works until every content is replaced by new content (at least that is what I think because I am not sure how the web content is loaded on browser).<br>
-However, there are situations when staleness check cannot be used, like when I return to the previous page. 
-In such cases, waiting for the presence of element is the standard way; yet, I could not figure out how to check until every element that has the same class name are loaded. 
-EC.presence_of_element_located returns true when there exists at least one element with the given condition. 
-In Melon, every song in song list tables is stored in div with same class name. 
+Staleness checks whether the remains of previous page exist, so it waits until every content is replaced by new content (that is what I think because I am not sure how contents are loaded on browser).<br>
+There are situations when staleness check cannot be used, like returning to the previous page. 
+In such cases, waiting for the presence of element is the standard way; yet, I could not figure out how to check until all the elements with the same class name are loaded. 
+EC.presence_of_element_located() returns True when there exists at least one element with the given condition. 
+In Melon, every song in a song list table is stored in a div that has the same class name. 
 Selenium would wait until it finds the div of the first song, but the code may try to access the last element before it is loaded. 
-Due to network conditions, there may be a delay between the loading of the first and the last element, and Selenium only waits for the first one.
+In other words, there may be a delay between loading the first element and the last element because of bad network conditions. 
+Selenium only waits for the first one and proceeds if it is found. The code will fail because it tries to locate the last element which has not been loaded due to the delay.
 </p>
 <p><strong>Eventually, all the experiments and analysis have become meaningless.</strong> 
-As my code makes so many requests in a short and relatively periodic interval of time, my IP was banned from Melon. 
-It took about 400 hundred continual requests for my IP to be blocked. I regained access after an hour. 
-I first used VPN proxy to continue crawling, but the new IP I was assigned was blocked soon as well. 
-Therefore, I manually pause the program after making one request. 
+As they program makes so many requests in a short and periodic intervals, my IP was banned from Melon for about an hour. 
+It took about 400 hundred continual requests to be blocked. 
+I used VPN proxy to continue crawling, but the new IP I was assigned was blocked soon as well. 
+Therefore, I had to manually pause the program after each request. 
 I am curious about the minimum request interval to make Melon believe I am an ordinary user. 
-However, I did not have enough time to have my IP banned again, so I just made the program pause for a random interval between 0.5 to 3.5 seconds. 
-Now it takes about 30 minutes to crawl 600 songs. 
-Though it became slow, t is definitely a better solution because the code runs until the end without failure.
+However, I did not have enough time to have my IP banned again, so I just made the program sleep for a random time period ranging from 0.5 to 3.5 seconds. 
+Now it takes about 30 minutes to crawl 600 songs, and I do not lose access to Melon. 
+Though the program became slow, it is definitely a better solution because the code runs without failure.
 </p>
 <p>
-I recommend using Selenium as it is more versatile, easier to code, and efficient in performance. 
-Though I need to crawl data once and never look at the code again, I have spent some time playing around with tools. 
+I recommend using Selenium as it is more versatile, easier to code, and better in performance. 
+Though I only need to crawl data once and never have to look at the code again, I have spent some time playing around with the tools. 
 I still do not know what is happening under the hood, but I felt that the web engine is not as robust as I expected it to be expecially in unstable network conditions. 
 Now I need to clean up the lyrics data. It will take a great amount of manual work, but there is no alternative solution. 
 I just have to write some code to make this labor more efficient. 
-With the processed data, I am planning to continue building lyric generation program.
+With the processed data, I am planning to continue building lyric generation software.
 </p>
 <p>
-Link to Github repo: https://github.com/noninertialframe/melon_lyrics_crawl
+Link to Github repo: <a href=https://github.com/noninertialframe/melon_lyrics_crawl>https://github.com/noninertialframe/melon_lyrics_crawl</a>
 </p>
