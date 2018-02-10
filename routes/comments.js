@@ -61,6 +61,8 @@ router.delete('/:comment_id', middleware.commentAuth, function(req, res){
             });
             // remove comments from both post.comments and comment collection
             //arrayUtil.findAndRemove(post.comments, '$oid', req.body._id);
+            
+            // this part of the code has errors
             var commentIndex = post.comments.indexOf(commentObjId); 
             if (commentIndex > -1) {
                 post.comments.splice(commentIndex, 1);
