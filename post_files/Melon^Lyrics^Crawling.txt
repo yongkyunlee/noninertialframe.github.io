@@ -9,7 +9,7 @@ Unlike music, lyrics are relatively easy to crawl because they are open and free
 </p>
 <p>
 This blog post is about crawling lyrics from Melon, the largest music streaming website in Korea. 
-I crawled Naver Music at first, but the lyrics uploaded there were subpar with many grammatical errors and strange line changes. 
+I crawled Naver Music at first, but the lyrics uploaded there were subpar with many grammatical errors and strange line breaks. 
 Since I still have a long way to go for the actual lyric generation project, I will write about this little sub-project first. 
 Here is the <a href=https://github.com/noninertialframe/melon_lyrics_crawl>link</a> to my Github repository of Melon crawling code. 
 I will compare BeautifulSoup and Selenium and explain some interesting points of the code.
